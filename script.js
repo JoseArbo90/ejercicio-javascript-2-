@@ -11,5 +11,47 @@
 window.addEventListener("load", onLoad);
 
 function onLoad() {
-  console.log("hi");
+  addClasses();
+  removeElements();
+  generateList();
+  addDisabled();
+}
+
+function addClasses() {
+  const elementSelected = document.getElementsByClassName("selected")[0];
+  const list = elementSelected.parentNode.parentNode;
+  const childrens = [...list.children];
+  childrens.forEach((child, index) => {
+    targetElement = child.firstChild;
+    targetElement.classList.add("element-" + (index + 1));
+  });
+}
+
+function removeElements() {
+  const firstElement = document.getElementById("list1");
+  const elementsToRemove = document.querySelectorAll(
+    "#list1>li:nth-of-type(even)"
+  );
+  elementsToRemove.forEach(elemento => firstElement.removeChild(elemento));
+}
+
+function generateList() {
+  const firstListChilds = [...document.getElementById("list1").children];
+  const secondList = document.getElementById("list2");
+
+  firstListChilds.forEach(el => {
+    const elhijo = el.firstChild;
+    const item = document.createElement("li");
+    const button = document.createElement("button");
+    const text = document.createTextNode(elhijo.textContent);
+    button.className = elhijo.className;
+    button.appendChild(text);
+    item.appendChild(button);
+    secondList.appendChild(item);
+  });
+}
+
+function addDisabled() {
+  const lastButton = document.querySelector("#list2>li:last-of-type>button");
+  lastButton.disabled = true;
 }
